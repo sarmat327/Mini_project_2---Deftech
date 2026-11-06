@@ -1,6 +1,7 @@
 #pragma once
 #include "stm32f4xx_hal.h"
 #include <stdint.h>
+#include <stdbool.h>
 #include "components/c_button.h"
 
 /* BUTTON STATES */
@@ -38,6 +39,7 @@ typedef struct
     uint32_t press_timestamp;
 
     GPIO_PinState pin_state;
+    bool long_press_reported;
 
 } C_Button_t;
 

@@ -1,0 +1,36 @@
+
+
+├── Src/
+│   ├── main.c
+│
+├── Drivers/                  // DL
+│   │
+│   ├── Timer/
+│   │   ├── d_timer.h
+│   │   └── d_timer.c
+│   │
+│   ├── GPIO/
+│   │   ├── d_gpio.h
+│   │   └── d_gpio.c
+│   │
+│   └── ADC/
+│       ├── d_adc.h
+│       └── d_adc.c
+│
+├── Components/               // CL
+│   │
+│   ├── Button/
+│   │   ├── c_button.h
+│   │   └── c_button.c
+│   │
+│   ├── LED/
+│   │   ├── c_led.h
+│   │   └── c_led.c
+│   │
+│   └── LDR/
+│       ├── c_ldr.h
+│       └── c_ldr.c
+│
+└── Business/                 // BL
+    ├── application.h
+    └── application.c

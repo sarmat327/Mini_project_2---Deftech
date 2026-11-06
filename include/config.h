@@ -26,3 +26,9 @@
 #define LDR_PORT               GPIOA
 #define LDR_PIN                GPIO_PIN_0
 #define LDR_ADC_CHANNEL        ADC_CHANNEL_0
+
+
+/* BUTTON */
+#define BUTTON_DEBOUNCE_MS       50U
+#define BUTTON_LONG_PRESS_MS     2000U
+

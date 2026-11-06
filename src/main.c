@@ -1,42 +1,35 @@
 #include "stm32f4xx_hal.h"
 #include "drivers/d_timer.h"
+#include "drivers/d_gpio.h"
+#include "config.h"
 
-#define LED_PORT GPIOB
-#define LED_PIN  GPIO_PIN_0
-
-#define LED_INTERVAL_MS 500
-uint32_t lastTimeChange = 0;
-
-static void GPIO_Init(void)
+// Callback для обробки подій кнопок
+void Test_Button_Callback(uint16_t pin, GPIO_PinState state)
 {
-    __HAL_RCC_GPIOB_CLK_ENABLE();
+    if (pin == BUTTON1_PIN)
+    {
+        // Кнопка 1 керує зеленим LED
+        D_GPIO_Write(GREEN_LED_PORT, GREEN_LED_PIN, state);
+    }
 
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-    GPIO_InitStruct.Pin = LED_PIN;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-
-    HAL_GPIO_Init(LED_PORT, &GPIO_InitStruct);
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0, GPIO_PIN_RESET);
+    if (pin == BUTTON2_PIN)
+    {
+        // Кнопка 2 керує жовтим LED
+        D_GPIO_Write(YELLOW_LED_PORT, YELLOW_LED_PIN, state);
+    }
 }
 
 int main(void)
 {
+
     HAL_Init();
-    GPIO_Init();
     TIM2_Init();
-
-    while (1)
+    D_GPIO_Init();
+    // Реєструємо callback
+    D_GPIO_RegisterEXTICallback(Test_Button_Callback);
+ 
+   while (1)
     {
-        uint32_t now = D_Timer_GetTick();
-
-        if (now - lastTimeChange >= 500)
-        {
-            HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-            lastTimeChange = now;
-        }
+        __WFI();   // усе робиться в перериваннях
     }
 }
-

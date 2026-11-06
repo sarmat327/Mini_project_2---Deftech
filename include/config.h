@@ -10,11 +10,11 @@
 #define RELAY_PORT             GPIOC            //СИСТЕМА "ПАСТОК"
 #define RELAY_PIN              GPIO_PIN_13
 
-#define BUTTON1_PORT           GPIOC            //КНОПКА ЯКА ЗАПУСКАЄ РЕЛЕ
-#define BUTTON1_PIN            GPIO_PIN_14
+#define BUTTON1_PORT           GPIOB            //КНОПКА ЯКА ЗАПУСКАЄ РЕЛЕ
+#define BUTTON1_PIN            GPIO_PIN_12
 
-#define BUTTON2_PORT           GPIOC            // КНОПКА "БОЙОВОГО" РЕЖИМУ
-#define BUTTON2_PIN            GPIO_PIN_15
+#define BUTTON2_PORT           GPIOB            // КНОПКА "БОЙОВОГО" РЕЖИМУ
+#define BUTTON2_PIN            GPIO_PIN_13
 
 #define GREEN_LED_PORT         GPIOB            // ЛЕД ІНДИКАЦІЇ "БОЙОВОГО" РЕЖИМУ
 #define GREEN_LED_PIN          GPIO_PIN_0

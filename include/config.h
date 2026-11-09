@@ -28,11 +28,14 @@
 #define LDR_PORT               GPIOA
 #define LDR_PIN                GPIO_PIN_0
 #define LDR_ADC_CHANNEL        ADC_CHANNEL_0
-
+#define LDR_THRESHOLD_MAX      2000U
+#define LDR_THRESHOLD_MIN      1800U      
 
 /* BUTTON */
 #define BUTTON_DEBOUNCE_MS       50U
 #define BUTTON_LONG_PRESS_MS     2000U
+
+void Error_Handler(void);
 
 
 

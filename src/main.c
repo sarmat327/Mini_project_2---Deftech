@@ -10,7 +10,7 @@ static C_Button_t button1;
 static C_Button_t button2;
 
 static C_LED_t green_led;
-
+static C_LED_t yellow_led;
 
 
 
@@ -22,7 +22,7 @@ int main(void)
     
 
     C_LED_Init(&green_led,GREEN_LED_PORT,GREEN_LED_PIN);
-
+    C_LED_Init(&yellow_led,YELLOW_LED_PORT,YELLOW_LED_PIN);
     C_Button_Init(&button1, BUTTON1_PORT, BUTTON1_PIN);
     C_Button_Init(&button2, BUTTON2_PORT, BUTTON2_PIN);
 
@@ -32,6 +32,7 @@ int main(void)
 
 while (1)
 {
+    C_Button_Process(&button2);
     uint32_t now = D_Timer_GetTick();
 
     if (now - last_toggle >= 500)
@@ -39,5 +40,13 @@ while (1)
         last_toggle = now;                       // перезапуск відліку
         D_GPIO_Toggle(green_led.port, green_led.pin);
     }
+
+    if(C_Button_GetEvent(&button2) == BUTTON_EVENT_SHORT_PRESS)
+    {
+        D_GPIO_Toggle(yellow_led.port, yellow_led.pin);
+    }
+
+
 }
 }
+

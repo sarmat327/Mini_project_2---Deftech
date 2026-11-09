@@ -1,35 +1,43 @@
 #include "stm32f4xx_hal.h"
 #include "drivers/d_timer.h"
 #include "drivers/d_gpio.h"
+#include "components/c_led.h"
+#include "components/c_button.h"
 #include "config.h"
 
-// Callback для обробки подій кнопок
-void Test_Button_Callback(uint16_t pin, GPIO_PinState state)
-{
-    if (pin == BUTTON1_PIN)
-    {
-        // Кнопка 1 керує зеленим LED
-        D_GPIO_Write(GREEN_LED_PORT, GREEN_LED_PIN, state);
-    }
 
-    if (pin == BUTTON2_PIN)
-    {
-        // Кнопка 2 керує жовтим LED
-        D_GPIO_Write(YELLOW_LED_PORT, YELLOW_LED_PIN, state);
-    }
-}
+static C_Button_t button1;
+static C_Button_t button2;
+
+static C_LED_t green_led;
+
+
+
 
 int main(void)
 {
-
     HAL_Init();
     TIM2_Init();
     D_GPIO_Init();
-    // Реєструємо callback
-    D_GPIO_RegisterEXTICallback(Test_Button_Callback);
- 
-   while (1)
+    
+
+    C_LED_Init(&green_led,GREEN_LED_PORT,GREEN_LED_PIN);
+
+    C_Button_Init(&button1, BUTTON1_PORT, BUTTON1_PIN);
+    C_Button_Init(&button2, BUTTON2_PORT, BUTTON2_PIN);
+
+    D_GPIO_RegisterEXTICallback(C_Button_EXTI_Handler);
+   
+    uint32_t last_toggle = D_Timer_GetTick();
+
+while (1)
+{
+    uint32_t now = D_Timer_GetTick();
+
+    if (now - last_toggle >= 500)
     {
-        __WFI();   // усе робиться в перериваннях
+        last_toggle = now;                       // перезапуск відліку
+        D_GPIO_Toggle(green_led.port, green_led.pin);
     }
+}
 }

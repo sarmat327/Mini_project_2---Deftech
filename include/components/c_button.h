@@ -43,6 +43,13 @@ typedef struct
 
 } C_Button_t;
 
+/*Ідентифкатори кнопок*/
+typedef enum
+{
+    BUTTON_ID_1,
+    BUTTON_ID_2
+
+} C_Button_ID_t;
 
 /* PUBLIC FUNCTIONS */
 

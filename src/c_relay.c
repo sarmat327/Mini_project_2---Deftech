@@ -52,7 +52,7 @@ void C_Relay_Init(C_Relay_t *relay,
     relay->pulse_count = 0;
 
     /* перше значення RELAY OFF */
-    C_Relay_SetOutput(relay, false);
+    C_Relay_SetOutput(relay, RELAY_IDLE);
 }
 
 

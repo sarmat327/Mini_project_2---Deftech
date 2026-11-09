@@ -5,6 +5,7 @@
 #include "components/c_led.h"
 #include "components/c_button.h"
 #include "components/c_ldr.h"
+#include "components/c_relay.h"
 #include "config.h"
 
 
@@ -15,6 +16,8 @@ static C_LED_t green_led;
 static C_LED_t yellow_led;
 
 static C_LDR_t ldr;
+
+static C_Relay_t relay;
 
 
 
@@ -30,6 +33,7 @@ int main(void)
     C_LED_Init(&yellow_led,YELLOW_LED_PORT,YELLOW_LED_PIN);
     C_Button_Init(&button1, BUTTON1_PORT, BUTTON1_PIN);
     C_Button_Init(&button2, BUTTON2_PORT, BUTTON2_PIN);
+    C_Relay_Init(&relay, RELAY_PORT, RELAY_PIN, RELAY_IDLE);
 
     D_GPIO_RegisterEXTICallback(C_Button_EXTI_Handler);
    
@@ -38,7 +42,9 @@ int main(void)
 while (1)
 {
     C_Button_Process(&button2);
+    C_Button_Process(&button1);
     C_LDR_Process(&ldr);
+    C_Relay_Process(&relay);
 
     uint32_t now = D_Timer_GetTick();
 
@@ -54,6 +60,12 @@ while (1)
        // D_GPIO_Toggle(yellow_led.port, yellow_led.pin);
         C_LED_Off(&yellow_led);
 
+    }
+
+    if(C_Button_GetEvent(&button1) == BUTTON_EVENT_SHORT_PRESS)
+    {
+      C_Relay_StartSequence(&relay);
+    
     }
 
     float ldr_current = C_LDR_GetFiltered(&ldr);

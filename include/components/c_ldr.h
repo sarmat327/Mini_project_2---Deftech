@@ -5,7 +5,7 @@
 
 /* LDR CONFIGURATION */
 #define LDR_SAMPLE_PERIOD_MS    100U
-#define LDR_FILTER_ALPHA        0.1f
+#define LDR_FILTER_ALPHA        0.4f
 
 /* LDR OBJECT */
 typedef struct
